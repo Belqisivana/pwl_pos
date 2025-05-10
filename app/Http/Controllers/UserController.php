@@ -10,14 +10,10 @@ class UserController extends Controller
 {
     public function index()
     {
-        // tambah data user dengan Eloquent Model
-        $data = [
-            'nama' => 'Pelanggan Pertama',
-        ];
-        UserModel::where('username', 'customer-1')->update($data); // update data user
+        // Hitung jumlah user dengan level_id = 2
+        $jumlahUserLevelDua = UserModel::where('level_id', 2)->count();
 
-        // coba akses model UserModel
-       $user = UserModel::where('username', 'manager9')->firstOrFail();
-        return view('user', ['data' => $user]);
+        // Kirim jumlah tersebut ke view
+        return view('user', ['jumlah' => $jumlahUserLevelDua]);
     }
 }
