@@ -10,10 +10,26 @@ class UserController extends Controller
 {
     public function index()
     {
-        // Hitung jumlah user dengan level_id = 2
-        $jumlahUserLevelDua = UserModel::where('level_id', 2)->count();
+        // tambah data user dengan Eloquent Model
+        $data = [
+            'nama' => 'Pelanggan Pertama',
+        ];
+        UserModel::where('username', 'customer-1')->update($data); // update data user
 
-        // Kirim jumlah tersebut ke view
-        return view('user', ['jumlah' => $jumlahUserLevelDua]);
+        // coba akses model UserModel
+  $user = UserModel::firstOrNew(
+    [
+        'username' => 'manager33',
+    ],
+    [
+        'nama' => 'Manager Tiga Tiga',
+        'password' => Hash::make('12345'),
+        'level_id' => 2
+    ]
+);
+
+$user->save();
+
+return view('user', ['data' => $user]);
     }
 }
